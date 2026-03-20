@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YFY Jupiter — Corporate Travel Policy FAQ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0f1f45;
+      --navy2: #1a3a7a;
+      --gold: #e2c97e;
+      --gold2: #c8a84b;
+      --slate: #64748b;
+      --light: #f0f4f8;
+      --white: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f1f45;
+      --sub: #64748b;
+      --answer-bg: #f8fafc;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--light);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--navy);
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.28);
+    }
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .topbar-brand span { font-size: 18px; }
+
+    .lang-toggle {
+      display: flex;
+      background: #1d3166;
+      border-radius: 20px;
+      padding: 3px;
+      gap: 2px;
+    }
+    .lang-btn {
+      padding: 5px 16px;
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+      color: #8fa4cc;
+      background: transparent;
+      letter-spacing: 0.5px;
+    }
+    .lang-btn.active {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #0f1f45 0%, #1a3a7a 60%, #0f1f45 100%);
+      padding: 52px 28px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(226,201,126,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(100,160,255,0.07) 0%, transparent 40%);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(226,201,126,0.12);
+      border: 1px solid rgba(226,201,126,0.3);
+      border-radius: 24px;
+      padding: 5px 18px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .hero-badge span {
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      font-size: clamp(24px, 5vw, 34px);
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .hero p {
+      color: #8fa4cc;
+      font-size: 14px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .hero-divider { color: var(--gold); font-size: 24px; opacity: 0.55; position: relative; }
+
+    /* ── CATEGORY FILTER ── */
+    .cat-bar {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      overflow-x: auto;
+      gap: 0;
+      position: sticky;
+      top: 52px;
+      z-index: 100;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+      scrollbar-width: none;
+    }
+    .cat-bar::-webkit-scrollbar { display: none; }
+    .cat-btn {
+      padding: 14px 16px;
+      border: none;
+      border-bottom: 2.5px solid transparent;
+      background: none;
+      cursor: pointer;
+      font-size: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      color: var(--slate);
+      white-space: nowrap;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .cat-btn:hover { color: var(--navy); }
+    .cat-btn.active {
+      border-bottom-color: var(--gold);
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    /* ── MAIN ── */
+    .main {
+      max-width: 800px;
+      margin: 32px auto;
+      padding: 0 18px 72px;
+    }
+    .results-count {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 18px;
+      padding-left: 2px;
+    }
+
+    /* ── FAQ CARD ── */
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .faq-card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .faq-card.open {
+      border-color: var(--navy);
+      box-shadow: 0 6px 28px rgba(15,31,69,0.12);
+    }
+
+    .faq-trigger {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 18px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .faq-num {
+      min-width: 30px;
+      height: 30px;
+      background: #f1f5f9;
+      color: var(--slate);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 1px;
+      transition: all 0.2s;
+    }
+    .faq-card.open .faq-num {
+      background: var(--navy);
+      color: var(--gold);
+    }
+
+    .faq-meta {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-bottom: 7px;
+    }
+    .faq-cat-label {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    .faq-dot { color: #cbd5e1; font-size: 10px; }
+    .faq-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 5px;
+    }
+    .tag-general { background: #f1f5f9; color: #475569; border: 1px solid #94a3b8; }
+    .tag-my      { background: #fff8e1; color: #b45309; border: 1px solid #fbbf24; }
+    .tag-tw      { background: #e0f2fe; color: #075985; border: 1px solid #38bdf8; }
+
+    .faq-question {
+      font-size: 15px;
+      color: var(--navy);
+      line-height: 1.65;
+      font-weight: 500;
+      text-align: left;
+    }
+    .faq-card.open .faq-question { font-weight: 600; }
+
+    .faq-chevron {
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+      border-radius: 6px;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #94a3b8;
+      transition: all 0.22s;
+      margin-top: 2px;
+    }
+    .faq-card.open .faq-chevron {
+      background: var(--navy);
+      color: var(--gold);
+      transform: rotate(180deg);
+    }
+
+    /* ── ANSWER ── */
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s;
+      opacity: 0;
+    }
+    .faq-answer.open {
+      max-height: 900px;
+      opacity: 1;
+    }
+    .faq-answer-inner {
+      padding: 0 20px 20px 64px;
+      border-top: 1px solid #f1f5f9;
+    }
+    .answer-box {
+      margin-top: 16px;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, #f8fafc, #f0f6ff);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 10px 10px 0;
+    }
+    .answer-label {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--gold2);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .answer-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .answer-text {
+      font-size: 14px;
+      color: #334155;
+      line-height: 1.85;
+      white-space: pre-line;
+    }
+
+    /* ── FOOTER CARD ── */
+    .footer-card {
+      margin-top: 32px;
+      padding: 20px 24px;
+      background: var(--navy);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .footer-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: rgba(226,201,126,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .footer-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 3px;
+    }
+    .footer-sub {
+      font-size: 12px;
+      color: #8fa4cc;
+      line-height: 1.6;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 560px) {
+      .topbar { padding: 0 16px; }
+      .topbar-brand { font-size: 10px; letter-spacing: 1px; }
+      .faq-answer-inner { padding: 0 14px 18px 14px; }
+      .faq-trigger { padding: 14px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:16px;">
+    <a href="policy-hub.html" style="display:flex;align-items:center;gap:6px;color:#8fa4cc;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:0.5px;opacity:0.8;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+      ← <span data-en="Home" data-zh="首頁">Home</span>
+    </a>
+    <div style="width:1px;height:16px;background:rgba(255,255,255,0.12);"></div>
+    <div class="topbar-brand">
+      <span>✈</span>
+      <span>YFY Jupiter — Travel Policy FAQ</span>
+    </div>
+  </div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')" id="btn-en">EN</button>
+    <button class="lang-btn" onclick="setLang('zh')" id="btn-zh">中文</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge"><span data-en="Employee Reference Guide" data-zh="員工參考手冊">Employee Reference Guide</span></div>
+  <h1 data-en="Corporate Travel Policy" data-zh="企業差旅政策">Corporate Travel Policy</h1>
+  <p data-en="Frequently Asked Questions · Version 1.0 · Released 2026-02-24" data-zh="常見問題解答 · 版本 1.0 · 發布日期 2026-02-24">Frequently Asked Questions · Version 1.0 · Released 2026-02-24</p>
+  <div style="margin:22px 0 18px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;position:relative;">
+    <a href="https://drive.google.com/file/d/1yi9fEgK5r6hkT-2eWaFUcuvy_ftwv8sV/view?usp=drive_link" target="_blank" id="policyBtn"
+      style="display:inline-flex;align-items:center;gap:8px;background:rgba(226,201,126,0.15);border:1.5px solid rgba(226,201,126,0.55);color:#e2c97e;text-decoration:none;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;letter-spacing:0.3px;transition:all 0.2s;"
+      onmouseover="this.style.background='rgba(226,201,126,0.28)';this.style.borderColor='#e2c97e';"
+      onmouseout="this.style.background='rgba(226,201,126,0.15)';this.style.borderColor='rgba(226,201,126,0.55)';">
+      <span style="font-size:16px;">📄</span>
+      <span data-en="View Full Policy Document" data-zh="查看完整差旅政策文件">View Full Policy Document</span>
+      <span style="font-size:11px;opacity:0.7;">↗</span>
+    </a>
+  </div>
+  <div class="hero-divider">— ✦ —</div>
+</div>
+
+<!-- CATEGORY FILTER -->
+<div class="cat-bar" id="catBar">
+  <button class="cat-btn active" onclick="filterCat('all')" data-key="all" data-en="🗂 All Topics" data-zh="🗂 全部主題">🗂 All Topics</button>
+  <button class="cat-btn" onclick="filterCat('approval')" data-key="approval" data-en="📋 Travel Approval" data-zh="📋 差旅申請與核准">📋 Travel Approval</button>
+  <button class="cat-btn" onclick="filterCat('flight')" data-key="flight" data-en="✈️ Air Travel &amp; Flight Class" data-zh="✈️ 機票與艙等">✈️ Air Travel &amp; Flight Class</button>
+  <button class="cat-btn" onclick="filterCat('lodging')" data-key="lodging" data-en="🏨 Lodging" data-zh="🏨 住宿">🏨 Lodging</button>
+  <button class="cat-btn" onclick="filterCat('perDiem')" data-key="perDiem" data-en="💰 Per Diem" data-zh="💰 每日津貼">💰 Per Diem</button>
+  <button class="cat-btn" onclick="filterCat('transport')" data-key="transport" data-en="🚗 Local Transportation &amp; Mileage" data-zh="🚗 當地交通與里程">🚗 Local Transportation &amp; Mileage</button>
+  <button class="cat-btn" onclick="filterCat('expense')" data-key="expense" data-en="💱 Expense Submission &amp; Currency" data-zh="💱 費用申報與匯率">💱 Expense Submission &amp; Currency</button>
+  <button class="cat-btn" onclick="filterCat('compliance')" data-key="compliance" data-en="⚖️ Compliance &amp; Misconduct" data-zh="⚖️ 合規與違規處理">⚖️ Compliance &amp; Misconduct</button>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <p class="results-count" id="resultsCount">Showing 14 questions</p>
+  <div class="faq-list" id="faqList"></div>
+
+  <!-- FOOTER -->
+  <div class="footer-card">
+    <div class="footer-icon">💬</div>
+    <div style="flex:1;">
+      <div class="footer-title" id="footerTitle">Still have questions?</div>
+      <div class="footer-sub" id="footerSub">Contact HR or refer to the full Corporate Travel Policy (v1.0, released 2026-02-24).</div>
+      <a href="https://drive.google.com/file/d/1yi9fEgK5r6hkT-2eWaFUcuvy_ftwv8sV/view?usp=drive_link" target="_blank" id="footerPolicyLink"
+        style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;color:#e2c97e;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;text-decoration:none;border-bottom:1px solid rgba(226,201,126,0.35);padding-bottom:1px;">
+        <span>📄</span>
+        <span data-en="View Full Policy Document ↗" data-zh="查看完整差旅政策文件 ↗">View Full Policy Document ↗</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+const FAQS = [
+  {
+    id:1, category:'approval', tag:'General',
+    en:{ q:'Do I need to get approval before booking my business trip?',
+         a:'Yes. All business travel must be submitted and approved through the Company\'s designated travel or expense management system before any booking is made. Cancellation or change fees will not be reimbursed if the travel was not pre-approved.' },
+    zh:{ q:'出差前需要先取得核准才能訂票嗎？',
+         a:'是的。所有出差行程必須在訂票前透過公司指定的差旅或費用管理系統提交並獲得核准。若未事先取得核准，取消或更改費用將不予報銷。' }
+  },
+  {
+    id:2, category:'approval', tag:'General',
+    en:{ q:'What information do I need to include in my travel request?',
+         a:'Your travel request must include estimated travel dates, a detailed itinerary, and any extraordinary costs not typically associated with standard travel (e.g., flights, lodging, meals). Any significant changes to approved travel — such as destination, duration, or a material increase in expenses — require a new approval.' },
+    zh:{ q:'差旅申請需要包含哪些資訊？',
+         a:'差旅申請須包含預估出行日期、詳細行程，以及任何非一般差旅費用（例如：機票、住宿、餐費以外的特殊費用）。若已核准的行程有重大變更（如目的地、天數或費用大幅增加），須重新提交申請並取得核准。' }
+  },
+  {
+    id:3, category:'flight', tag:'General',
+    en:{ q:'What cabin class am I entitled to for flights?',
+         a:'It depends on your employee level:\n• Vice Presidents (VP) and Above: Default is Premium Economy. For flights 8 hours or longer (single segment), Business Class is permitted.\n• All Other Employees: Default is Economy Class. For flights 8 hours or longer (single segment), Premium Economy is permitted.\n\nTravel in a higher class than permitted requires prior approval.' },
+    zh:{ q:'我可以搭乘哪個艙等？',
+         a:'視員工職級而定：\n• 副總裁（VP）及以上：預設為豪華經濟艙。單一航段飛行時間達8小時或以上，可升等至商務艙。\n• 其他所有員工：預設為經濟艙。單一航段飛行時間達8小時或以上，可升等至豪華經濟艙。\n\n搭乘超過規定艙等須事先取得核准。' }
+  },
+  {
+    id:4, category:'flight', tag:'General',
+    en:{ q:'How is the 8-hour threshold for cabin upgrades calculated?',
+         a:'The 8-hour threshold refers to the scheduled flight time of a single flight segment — not the total journey time. For example, if you have a connecting flight, each leg is assessed individually.' },
+    zh:{ q:'艙等升等的8小時門檻如何計算？',
+         a:'8小時門檻是指單一航段的預定飛行時間，而非整體行程時間。例如，若您有轉機航班，每段航程須分別計算。' }
+  },
+  {
+    id:5, category:'lodging', tag:'General',
+    en:{ q:'Is there a cap on how much I can claim for hotel accommodation?',
+         a:'Yes. Lodging reimbursement is subject to a daily cap based on the Company\'s approved external travel allowance benchmarks. The applicable cap is set at the rate in effect on the first day of travel and remains unchanged for the entire trip. If your accommodation exceeds the cap, prior approval is required.' },
+    zh:{ q:'住宿費用有上限嗎？',
+         a:'有。住宿報銷設有每日上限，依據公司核准的外部差旅津貼基準而定。適用上限為出差第一天起生效的費率，並維持整個行程不變。若住宿費用超過上限，須事先取得核准。' }
+  },
+  {
+    id:6, category:'lodging', tag:'General',
+    en:{ q:'Is the lodging amount shown in the expense system just a reference for booking? Do I still need to submit a claim afterwards?',
+         a:'This applies globally. The amount displayed in the system is the maximum reimbursable cap — it is not a pre-approved payment. You must still submit an expense claim after your trip. Reimbursement is based on actual costs incurred, up to the applicable cap, and requires valid receipts.\n\nExample (MY): In GAIA, the figure shown is the lodging cap for that destination. Employees must still go back into GAIA after the trip to submit the actual hotel receipt for reimbursement.' },
+    zh:{ q:'費用系統上顯示的住宿金額只是訂房參考嗎？出差後還需要另外申請報銷嗎？',
+         a:'此規定適用於全球所有員工。系統上顯示的金額為住宿費用上限，並非預先核准的付款。員工仍須於出差後提交費用申請，以實際發生費用進行實報實銷，且須附上有效收據，金額不超過適用上限。\n\n舉例（馬來西亞）：在GAIA系統中，顯示的金額為該目的地的住宿費用上限。員工出差後仍須回到GAIA系統，上傳實際飯店收據並提交申請，方可獲得報銷。' }
+  },
+  {
+    id:7, category:'perDiem', tag:'General',
+    en:{ q:'What does per diem cover, and do I need receipts?',
+         a:'Per diem covers meals, miscellaneous incidental expenses, and internet and phone charges during official travel days. Receipts are not required for per diem reimbursement.\n\nNote: if a meal is provided by a host, hotel, conference, or event, your per diem amount will not be reduced.' },
+    zh:{ q:'每日津貼涵蓋哪些費用？需要附上收據嗎？',
+         a:'每日津貼用於支付出差期間的餐費、雜項小額費用，以及網路與通話費用，無需附上收據。\n\n請注意：即使主辦方、飯店、會議或活動提供餐點，每日津貼金額也不會因此減少。' }
+  },
+  {
+    id:8, category:'perDiem', tag:'General',
+    en:{ q:'Am I eligible for per diem on a same-day business trip with no overnight stay?',
+         a:'No. Per diem is only payable for business travel that includes at least one overnight stay. Same-day trips without an overnight stay are not eligible for per diem.' },
+    zh:{ q:'當天來回的出差（無住宿）可以申請每日津貼嗎？',
+         a:'不可以。每日津貼僅適用於包含至少一晚住宿的出差行程。當天往返且無住宿的出差不符合每日津貼申領資格。' }
+  },
+  {
+    id:9, category:'perDiem', tag:'General',
+    en:{ q:'How is per diem calculated on departure and return days?',
+         a:'On both the departure day and the return day, per diem is calculated at 50% of the applicable standard daily rate.' },
+    zh:{ q:'出發日與返回日的每日津貼如何計算？',
+         a:'出發日與返回日的每日津貼均以標準日費率的50%計算。' }
+  },
+  {
+    id:15, category:'perDiem', tag:'General',
+    en:{ q:'If I travel to multiple destinations and need to submit separate travel requests, how does the 50% per diem rule apply on overlapping days?',
+         a:'When a trip covers multiple destinations requiring separate travel requests, each request is treated independently. The first day of each request is counted at 50%, and the last day of each request is also counted at 50%.\n\nThis means that if one trip ends and another begins on the same calendar day, that day will receive 50% from the first request + 50% from the second request = 100% total per diem for that day.\n\nExample: Taiwan → Malaysia → Thailand\n\nRequest 1 (Taiwan to Malaysia): 3/1 – 3/5\n• 3/1 – Depart Taiwan, arrive Malaysia: 50% (MY rate, departure day)\n• 3/2 to 3/4 – Full days in Malaysia: 100% each (MY rate)\n• 3/5 – Last day of Request 1: 50% (MY rate)\n\nRequest 2 (Malaysia to Thailand): 3/5 – 3/10\n• 3/5 – First day of Request 2, depart Malaysia, arrive Thailand: 50% (TH rate)\n• 3/6 to 3/9 – Full days in Thailand: 100% each (TH rate)\n• 3/10 – Return to Taiwan: 50% (TH rate, return day)\n\nResult for 3/5: 50% (MY rate, end of Request 1) + 50% (TH rate, start of Request 2) = effectively 100% total, split across two requests and two destination rates.\n\nNote: Per diem rates are based on the destination country for each day. Please confirm applicable rates with HR or through the Company\'s designated system.' },
+    zh:{ q:'如果出差跨越多個地點，需要提交兩張出差申請單，重疊日的每日津貼50%規定如何計算？',
+         a:'當一趟出差需要分成多張申請單時，每張申請單獨立計算。每張申請單的第一天計50%，最後一天也計50%。\n\n因此，若某一天同時是第一張單的最後一天，也是第二張單的第一天，該日將獲得：第一張單50% + 第二張單50% = 當日合計100%的每日津貼。\n\n範例：台灣 → 馬來西亞 → 泰國\n\n第一張申請單（台灣至馬來西亞）：3/1 – 3/5\n• 3/1 – 從台灣出發，抵達馬來西亞：50%（馬來西亞費率，出發日）\n• 3/2 至 3/4 – 在馬來西亞的完整出差日：各100%（馬來西亞費率）\n• 3/5 – 第一張單最後一天：50%（馬來西亞費率）\n\n第二張申請單（馬來西亞至泰國）：3/5 – 3/10\n• 3/5 – 第二張單第一天，從馬來西亞出發，抵達泰國：50%（泰國費率）\n• 3/6 至 3/9 – 在泰國的完整出差日：各100%（泰國費率）\n• 3/10 – 返回台灣：50%（泰國費率，返回日）\n\n3/5當日結果：50%（馬來西亞費率，第一張單末日）+ 50%（泰國費率，第二張單首日）= 實際合計100%，分屬兩張申請單、兩個目的地費率。\n\n注意：每日津貼費率依當日所在目的地國家而定，請向人資確認或透過公司指定系統查詢適用費率。' }
+  },
+  {
+    id:10, category:'transport', tag:'General',
+    en:{ q:'What should I select if my destination is not listed in the system?',
+         a:'Please select "Others" in the system. This applies globally — if your actual destination does not appear in the dropdown list, always choose "Others." If the listed options seem unreasonable for your travel needs, you may raise the concern for further review.\n\nExample (MY): The Malaysia location list does not include Johor (柔佛 / Johor), yet lists places like Sabah, Kuantan, and Langkawi where there may be no customers. In such cases, employees should select "Others."' },
+    zh:{ q:'如果目的地不在系統清單中，應該選擇哪個選項？',
+         a:'請在系統中選擇「Others（其他）」。此規定適用於全球所有員工——若實際目的地未出現在下拉選單中，一律選擇「Others」。若認為清單選項不合理，亦可提出反映以供進一步檢討。\n\n舉例（馬來西亞）：馬來西亞的差旅地點清單中沒有柔佛（Johor），卻包含沙巴、關丹、蘭卡威等地點。遇到此情況，員工應選擇「Others」。' }
+  },
+  {
+    id:11, category:'transport', tag:'General',
+    en:{ q:'Can I claim mileage reimbursement if I use my personal vehicle for business travel?',
+         a:'Yes, provided you are eligible. Mileage reimbursement applies when a personal vehicle is used for approved business travel. Claims must reflect actual business distance only.\n\nRates vary by country:\n• Taiwan: USD 0.21/km\n• United States: USD 0.45/km\n• Hong Kong: USD 0.40/km\n• China Mainland: USD 0.20/km\n• Indonesia: USD 0.16/km\n• Thailand: USD 0.19/km\n• Malaysia: USD 0.15/km\n• Vietnam: USD 0.17/km\n\nEmployees with a Company vehicle, car allowance, or fuel subsidy are generally not eligible unless pre-approved.' },
+    zh:{ q:'使用私人車輛出差可以申請里程補貼嗎？',
+         a:'可以，但須符合資格。使用私人車輛進行核准出差時，可申請里程補貼，僅限實際出差里程，個人用途里程不得申報。\n\n各國費率如下：\n• 台灣：USD 0.21/公里\n• 美國：USD 0.45/公里\n• 香港：USD 0.40/公里\n• 中國大陸：USD 0.20/公里\n• 印尼：USD 0.16/公里\n• 泰國：USD 0.19/公里\n• 馬來西亞：USD 0.15/公里\n• 越南：USD 0.17/公里\n\n持有公司車輛、交通津貼或燃油補貼的員工，原則上不具申領資格，除非事先獲得核准。' }
+  },
+  {
+    id:12, category:'expense', tag:'General',
+    en:{ q:'How are foreign currency expenses converted for reimbursement?',
+         a:'There are three options:\n\n1. Company-maintained rate (default): Average exchange rate from 3 days before to 3 days after the travel period.\n\n2. Bank Exchange Rate (Per Trip): Submit a bank-provided exchange slip dated within 30 days before the first day of travel. One rate applies to all non-home currency transactions for the trip.\n\n3. Per-Transaction Rate: Submit a bank, credit card, or debit card statement showing the local currency amount and any service fees for each individual transaction.' },
+    zh:{ q:'外幣費用如何換算報銷？',
+         a:'共有三種方式：\n\n1. 公司維護匯率（預設）：以出差期間前後各3天的平均匯率計算。\n\n2. 銀行匯率（整趟行程）：提交出發日前30天內由銀行出具的換匯單據，適用於整趟行程所有非本幣交易。\n\n3. 逐筆交易匯率：提交銀行、信用卡或扣帳卡對帳單，以每筆交易的本地貨幣金額（含手續費）為準。' }
+  },
+  {
+    id:13, category:'expense', tag:'General',
+    en:{ q:'What happens if I don\'t submit my expense claim on time or fail to provide supporting documents?',
+         a:'Failure to comply with submission deadlines or documentation requirements may result in delayed or denied reimbursement. Always submit claims through the Company\'s designated system within the required timeframe and attach all necessary supporting documents as required by Accounting & Business Service.' },
+    zh:{ q:'若未按時提交費用申請或缺少支持文件，會有什麼後果？',
+         a:'未能遵守申報期限或文件要求，可能導致報銷延遲或被拒。請務必在規定期限內透過公司指定系統提交申請，並依財務暨業務服務部門的要求附上所有必要文件。' }
+  },
+  {
+    id:16, category:'compliance', tag:'General',
+    en:{ q:'What should I do if the new global travel policy conflicts with local tax regulations?',
+         a:'If you identify any clause in the new Corporate Travel Policy that appears to conflict with local tax regulations, please notify the following stakeholders immediately:\n\n• Human Resources: Sharon Lin\n• Chairman\'s Office: Penny Tsai\n• Business Transformation: Wayne Chen\n• Accounting & Business Services: Casson\n\nDo not make independent adjustments to your expense claims. Any necessary modifications to local practice or system configuration will be reviewed and decided collectively by the relevant teams.' },
+    zh:{ q:'若新的全球差旅政策與當地稅法有衝突，應該怎麼辦？',
+         a:'若您發現新版企業差旅政策中有任何條款與當地稅法有所牴觸，請立即通知以下相關負責人：\n\n• 人力資源部：Sharon Lin\n• 董事長辦公室：Penny Tsai\n• 業務轉型部：Wayne Chen\n• 財務暨業務服務部：Casson\n\n請勿自行調整費用申報內容。任何當地實務或系統設定的修改，將由相關團隊共同檢討後決定。' }
+  },
+  {
+    id:14, category:'compliance', tag:'General',
+    en:{ q:'What are the consequences of violating the Corporate Travel Policy?',
+         a:'Violations may result in:\n\n1. Financial adjustments — claims may be rejected or adjusted, and employees may be required to repay amounts improperly claimed.\n\n2. Disciplinary action — serious or repeated violations, including fraudulent claims, may result in HR disciplinary measures.\n\n3. Audit and review — all violations are subject to internal audit follow-up.\n\nMisuse of travel funds or falsification of documents may lead to further disciplinary action under applicable HR and internal control policies.' },
+    zh:{ q:'違反差旅政策會有什麼後果？',
+         a:'違規可能導致以下後果：\n\n1. 財務調整——申請可能被拒絕或調整，員工可能須退還不當申領的金額。\n\n2. 紀律處分——嚴重或重複違規（包括虛報費用）可能依人資政策受到紀律處分。\n\n3. 稽核與審查——所有違規行為均可能接受內部稽核追蹤。\n\n挪用差旅款項或偽造文件者將依公司規定予以懲處。' }
+  }
+];
+
+let currentLang = 'en';
+let currentCat = 'all';
+let openId = null;
+
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+
+  // Update all data-en/zh elements
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.textContent = el.getAttribute('data-' + lang);
+  });
+
+  // Re-render FAQ
+  renderFAQ();
+  updateCatBar();
+}
+
+function filterCat(cat) {
+  currentCat = cat;
+  openId = null;
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-key') === cat);
+  });
+  renderFAQ();
+}
+
+function updateCatBar() {
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.textContent = btn.getAttribute('data-' + currentLang);
+  });
+}
+
+function toggleFAQ(id) {
+  openId = openId === id ? null : id;
+  renderFAQ();
+}
+
+function renderFAQ() {
+  const filtered = currentCat === 'all' ? FAQS : FAQS.filter(f => f.category === currentCat);
+  const count = filtered.length;
+  const countEl = document.getElementById('resultsCount');
+  countEl.textContent = currentLang === 'en'
+    ? `Showing ${count} question${count !== 1 ? 's' : ''}`
+    : `共 ${count} 個問題`;
+
+  const list = document.getElementById('faqList');
+  list.innerHTML = filtered.map((faq, i) => {
+    const content = faq[currentLang];
+    const isOpen = openId === faq.id;
+    const tagClass = 'tag-' + faq.tag.toLowerCase();
+    const answerLabel = currentLang === 'en' ? 'Answer' : '回覆';
+
+    return `
+      <div class="faq-card ${isOpen ? 'open' : ''}" id="card-${faq.id}">
+        <button class="faq-trigger" onclick="toggleFAQ(${faq.id})">
+          <div class="faq-num">${String(i+1).padStart(2,'0')}</div>
+          <div style="flex:1;min-width:0">
+            <div class="faq-meta">
+              <span class="faq-cat-label">${getCatLabel(faq.category)}</span>
+              <span class="faq-dot">•</span>
+              <span class="faq-tag ${tagClass}">${faq.tag}</span>
+            </div>
+            <div class="faq-question">${content.q}</div>
+          </div>
+          <div class="faq-chevron">▾</div>
+        </button>
+        <div class="faq-answer ${isOpen ? 'open' : ''}">
+          <div class="faq-answer-inner">
+            <div class="answer-box">
+              <div class="answer-label">${answerLabel}</div>
+              <div class="answer-text">${content.a}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Update footer
+  document.getElementById('footerTitle').textContent =
+    currentLang === 'en' ? 'Still have questions?' : '還有其他問題？';
+  document.getElementById('footerSub').textContent =
+    currentLang === 'en'
+      ? 'Contact HR or refer to the full Corporate Travel Policy (v1.0, released 2026-02-24).'
+      : '請聯繫人資部門，或參閱完整差旅政策文件（版本 1.0，發布日期 2026-02-24）。';
+  const footerLink = document.getElementById('footerPolicyLink');
+  if (footerLink) {
+    footerLink.querySelector('span:last-child').textContent =
+      currentLang === 'en' ? 'View Full Policy Document ↗' : '查看完整差旅政策文件 ↗';
+  }
+  // Update hero policy button text
+  const policyBtn = document.getElementById('policyBtn');
+  if (policyBtn) {
+    policyBtn.querySelector('[data-en]').textContent =
+      currentLang === 'en' ? 'View Full Policy Document' : '查看完整差旅政策文件';
+  }
+}
+
+function getCatLabel(cat) {
+  const labels = {
+    en: { approval:'📋 Travel Approval', flight:'✈️ Air Travel & Flight Class', lodging:'🏨 Lodging', perDiem:'💰 Per Diem', transport:'🚗 Local Transportation & Mileage', expense:'💱 Expense Submission & Currency', compliance:'⚖️ Compliance & Misconduct' },
+    zh: { approval:'📋 差旅申請與核准', flight:'✈️ 機票與艙等', lodging:'🏨 住宿', perDiem:'💰 每日津貼', transport:'🚗 當地交通與里程', expense:'💱 費用申報與匯率', compliance:'⚖️ 合規與違規處理' }
+  };
+  return labels[currentLang][cat] || cat;
+}
+
+// Init
+renderFAQ();
+</script>
+</body>
+</html>
